@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Координаты плитки</title>
+</head>
+<body>
+    X: <input type="number" id="x">
+    Y: <input type="number" id="y">
+    Z: <input type="number" id="z">
+    <button onclick="calculate()">Рассчитать</button>
+    <div id="result"></div>
+
+    <script>
+        function tile_to_lat_lon(x, y, z) {
+            const n = Math.pow(2.0, z);
+            const lonDeg = x / n * 360.0 - 180.0;
+            const latRad = Math.atan(Math.sinh(Math.PI * (1 - 2 * y / n)));
+            const latDeg = latRad * 180.0 / Math.PI;
+            return [latDeg, lonDeg];
+        }
+
+        function calculate() {
+            const x = parseInt(document.getElementById("x").value);
+            const y = parseInt(document.getElementById("y").value);
+            const z = parseInt(document.getElementById("z").value);
+            const [lat, lng] = tile_to_lat_lon(x, y, z);
+            document.getElementById("result").innerHTML = `Широта: ${lat}, Долгота: ${lng}`;
+        }
+    </script>
+</body>
+<script>
+    function tile_to_lat_lon(x, y, z) {
+        const n = Math.pow(2.0, z);
+        const lonDeg = x / n * 360.0 - 180.0;
+        const latRad = Math.atan(Math.sinh(Math.PI * (1 - 2 * y / n)));
+        const latDeg = latRad * 180.0 / Math.PI;
+        return [latDeg, lonDeg];
+    }
+</script>
+</html>
